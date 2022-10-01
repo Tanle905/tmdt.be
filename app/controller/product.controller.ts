@@ -79,11 +79,17 @@ export const productController = {
   delete: async (req: ProductRequest, res: Response) => {
     try {
       const { idArray } = req.query;
-      const parsedIdArray: string[] = JSON.parse(idArray);
-      console.log(parsedIdArray[0])
-      const objectIds = parsedIdArray.map((id: any) => new ObjectId(id));
-      const count = await ProductModel.deleteMany({ _id: { $in: objectIds } });
-      res.status(200).send(`${count} items has been deleted`);
+      if (idArray) {
+        const parsedIdArray: string[] = JSON.parse(idArray);
+        const objectIds = parsedIdArray.map((id: any) => new ObjectId(id));
+        const count = await ProductModel.deleteMany({
+          _id: { $in: objectIds },
+        });
+        res.status(200).send(`${count} items has been deleted`);
+      } else {
+        await ProductModel.deleteMany({});
+        res.status(200).send("All items has been removed");
+      }
     } catch (error: any) {
       res.status(400).json({ message: error.message });
     }
