@@ -1,6 +1,22 @@
+//Routes
+export const AUTH_ROUTE = {
+  BASE: "/",
+  LOGIN: "/login",
+  SIGNUP: "/signup",
+};
 export const PRODUCT_ROUTE = {
   BASE: "/",
   ID: "/:id",
 };
-
+export const CART_ROUTE = {
+  BASE: '/',
+  ID: "/:userId",
+}
+//Endpoints
+export const API_ENDPOINT = "/api";
+export const AUTH_ENDPOINT = "/auth";
+export const USER_ENDPOINT = "/user";
+export const ADMIN_ENDPOINT = "/admin";
 export const PRODUCT_ENDPOINT = "/product";
+export const CART_ENDPOINT = "/cart";
+

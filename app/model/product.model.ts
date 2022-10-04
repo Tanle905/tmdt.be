@@ -4,14 +4,16 @@ import {
   ProductModel as ProductModelInterface,
 } from "../interface/product.interface";
 
-export const productDataSchema: Schema = new mongoose.Schema(
+export const productDataSchema: Schema = new mongoose.Schema<Product>(
   {
     title: {
       type: String,
       index: true,
+      required: true,
     },
     description: {
       type: String,
+      required: true,
     },
     price: {
       type: Number,
