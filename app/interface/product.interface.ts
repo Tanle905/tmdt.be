@@ -2,7 +2,7 @@ import { Request } from "express";
 import { Model, ObjectId } from "mongoose";
 
 export interface Product {
-  productId?: string;
+  _id?: string;
   title: string;
   description: string;
   price: number;
