@@ -62,7 +62,7 @@ export const authController = {
           const token = jwt.sign({ id: user.id }, config.app.secret);
           const authorities = [];
           for (let i = 0; i < user.roles.length; i++) {
-            authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
+            authorities.push(user.roles[i].name);
           }
           res.status(200).json({
             id: user._id,
