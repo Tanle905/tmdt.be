@@ -13,11 +13,11 @@ export const cartController = {
         const mappedProductsList = document[0]
           ? await Promise.all(
               document[0].productsList.map(async (item) => {
-                console.log(item.productId)
+                const product = await ProductModel.findOne({
+                  _id: item.productId,
+                });
                 return {
-                  product: await ProductModel.findOne({
-                    _id: item.productId,
-                  }),
+                  ...product,
                   quantity: item.quantity,
                 };
               })
