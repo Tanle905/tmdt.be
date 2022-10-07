@@ -17,7 +17,7 @@ export const cartController = {
                   _id: item.productId,
                 });
                 return {
-                  ...product,
+                  ...product?.toObject(),
                   quantity: item.quantity,
                 };
               })
