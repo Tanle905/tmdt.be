@@ -1,6 +1,6 @@
 import { UserRequest } from "../interface/user_and_roles.interface";
 import { UserModel } from "../model/user.model";
-import * as bcrypt from "bcrypt";
+import * as bcrypt from "bcryptjs";
 import { RoleModel } from "../model/role.model";
 import { NextFunction, Response } from "express";
 import * as jwt from "jsonwebtoken";
