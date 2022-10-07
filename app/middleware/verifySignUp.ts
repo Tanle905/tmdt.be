@@ -1,5 +1,5 @@
 import { NextFunction, Response } from "express";
-import { ROLES } from "../constants and enums/variable";
+import { SYSTEM_ROLES } from "../constants and enums/variable";
 import { UserRequest } from "../interface/user_and_roles.interface";
 import { UserModel } from "../model/user.model";
 
@@ -36,7 +36,7 @@ export const verifySignUp = {
   ) => {
     if (req.body.roles) {
       for (let i = 0; i < req.body.roles.length; i++) {
-        if (!ROLES.includes(req.body.roles[i])) {
+        if (!SYSTEM_ROLES.includes(req.body.roles[i])) {
           return res.status(400).send({
             message: `Failed! Role ${req.body.roles[i]} does not exist!`,
           });

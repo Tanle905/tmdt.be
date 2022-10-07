@@ -5,6 +5,7 @@ import { RoleModel } from "../model/role.model";
 import { NextFunction, Response } from "express";
 import * as jwt from "jsonwebtoken";
 import { config } from "../config";
+import { ROLES } from "../constants and enums/variable";
 
 export const authController = {
   signup: async (req: UserRequest, res: Response, next: NextFunction) => {
@@ -24,7 +25,7 @@ export const authController = {
             user.save();
           });
         } else {
-          RoleModel.findOne({ name: "user" }).exec((err: any, role) => {
+          RoleModel.findOne({ name: ROLES.USER }).exec((err: any, role) => {
             if (role) {
               user.roles = [role._id.toString()];
               user.save();
