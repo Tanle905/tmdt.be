@@ -7,7 +7,9 @@ export const profileController = {
   get: async (req: UserRequest, res: Response) => {
     const { userId } = res.locals;
     try {
-      const document = await UserModel.findById(new ObjectId(userId));
+      const document = await UserModel.findById(new ObjectId(userId)).select(
+        "-password"
+      );
       return document
         ? res.status(200).json(document)
         : res.status(404).json({ message: "User not found!" });
@@ -22,10 +24,12 @@ export const profileController = {
       UserModel.findByIdAndUpdate(new ObjectId(userId), profileData, {
         upsert: true,
         returnDocument: "after",
-      }).exec((error, user) => {
-        if (error) return res.status(400).json({ message: error });
-        return res.status(200).json(user);
-      });
+      })
+        .select("-password")
+        .exec((error, user) => {
+          if (error) return res.status(400).json({ message: error });
+          return res.status(200).json(user);
+        });
     } catch (error) {
       res.status(500).json({ message: error });
     }

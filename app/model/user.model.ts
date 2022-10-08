@@ -18,7 +18,6 @@ export const userDataSchema = new mongoose.Schema<User>(
     password: {
       type: String,
       required: true,
-      select: false,
     },
     address: {
       type: String,

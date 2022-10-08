@@ -43,11 +43,12 @@ export const authController = {
       UserModel.findOne({
         username: req.body.username,
       })
-        .populate("roles", "-__v")
-        .exec((err, user: any) => {
-          if (!user) {
-            return res.status(404).json({ message: "User Not found." });
-          }
+      .populate("roles", "-__v")
+      .exec((err, user: any) => {
+        if (!user) {
+          return res.status(404).json({ message: "User Not found." });
+        }
+        console.log(req.body.password, user)
 
           const passwordIsValid = bcrypt.compareSync(
             req.body.password,
@@ -70,6 +71,7 @@ export const authController = {
             email: user.email,
             roles: authorities,
             accessToken: token,
+            imageUrl: user.imageUrl
           });
         });
     } catch (error) {
