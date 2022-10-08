@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
-import { User } from "../interface/user_and_roles.interface";
+import {
+  User,
+  UserModelInterface,
+} from "../interface/user_and_roles.interface";
 
 export const userDataSchema = new mongoose.Schema<User>(
   {
@@ -11,27 +14,42 @@ export const userDataSchema = new mongoose.Schema<User>(
       type: String,
       required: true,
     },
+    roles: [{ type: mongoose.Schema.Types.ObjectId, ref: "Role" }],
     password: {
       type: String,
       required: true,
+      select: false,
+    },
+    address: {
+      type: String,
     },
     imageUrl: {
       type: String,
     },
-    roles: [{ type: mongoose.Schema.Types.ObjectId, ref: "Role" }],
+    phoneNumber: {
+      type: Number,
+    },
+    payment: {
+      type: String,
+    },
   },
   {
     timestamps: { createdAt: "createdAt", updatedAt: "updatedAt" },
-    // statics: {
-    //   extractProductData(payload: any) {
-    //     Object.keys(payload).forEach(
-    //       (key: string) => payload[key] === undefined && delete payload[key]
-    //     );
+    statics: {
+      extractUserData(payload: any) {
+        Object.keys(payload).forEach(
+          (key: string) =>
+            payload[key] === undefined ||
+            (payload[key] === null && delete payload[key])
+        );
 
-    //     return payload;
-    //   },
-    // },
+        return payload;
+      },
+    },
   }
 );
 
-export const UserModel = mongoose.model<User>("User", userDataSchema);
+export const UserModel = mongoose.model<User, UserModelInterface>(
+  "User",
+  userDataSchema
+);
