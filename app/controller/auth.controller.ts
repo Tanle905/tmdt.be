@@ -43,24 +43,24 @@ export const authController = {
       UserModel.findOne({
         username: req.body.username,
       })
-      .populate("roles", "-__v")
-      .exec((err, user: any) => {
-        if (!user) {
-          return res.status(404).json({ message: "User Not found." });
-        }
+        .populate("roles", "-__v")
+        .exec((err, user: any) => {
+          if (!user) {
+            return res.status(404).json({ message: "User Not found." });
+          }
 
           const passwordIsValid = bcrypt.compareSync(
             req.body.password,
             user.password
           );
+          const token = jwt.sign({ id: user.id }, config.app.secret);
+          const authorities = [];
           if (!passwordIsValid) {
             return res.status(401).json({
               accessToken: null,
               message: "Invalid Password!",
             });
           }
-          const token = jwt.sign({ id: user.id }, config.app.secret);
-          const authorities = [];
           for (let i = 0; i < user.roles.length; i++) {
             authorities.push(user.roles[i].name);
           }
@@ -70,7 +70,7 @@ export const authController = {
             email: user.email,
             roles: authorities,
             accessToken: token,
-            imageUrl: user.imageUrl
+            imageUrl: user.imageUrl,
           });
         });
     } catch (error) {

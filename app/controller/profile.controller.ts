@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { ObjectId } from "mongodb";
-import { UserRequest } from "../interface/user_and_roles.interface";
+import { User, UserRequest } from "../interface/user_and_roles.interface";
 import { UserModel } from "../model/user.model";
 
 export const profileController = {
@@ -26,8 +26,15 @@ export const profileController = {
         returnDocument: "after",
       })
         .select("-password")
-        .exec((error, user) => {
+        .populate("roles", "-__v")
+        .exec((error, user: any) => {
           if (error) return res.status(400).json({ message: error });
+          if (!user)
+            return res.status(404).json({ message: "User Not found." });
+          const authorities = [];
+          for (let i = 0; i < user.roles.length; i++) {
+            authorities.push(user.roles[i].name);
+          }
           return res.status(200).json(user);
         });
     } catch (error) {
