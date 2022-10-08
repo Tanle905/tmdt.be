@@ -48,7 +48,6 @@ export const authController = {
         if (!user) {
           return res.status(404).json({ message: "User Not found." });
         }
-        console.log(req.body.password, user)
 
           const passwordIsValid = bcrypt.compareSync(
             req.body.password,

@@ -1,6 +1,7 @@
 import { NextFunction, Response } from "express";
 import * as jwt from "jsonwebtoken";
 import { config } from "../config";
+import { ROLES } from "../constants and enums/variable";
 import { UserRequest } from "../interface/user_and_roles.interface";
 import { RoleModel } from "../model/role.model";
 import { UserModel } from "../model/user.model";
@@ -31,7 +32,7 @@ export const authJwt = {
           },
           (error: any, roles: any) => {
             for (let i = 0; i < roles.length; i++) {
-              if (roles[i].name === "admin") {
+              if (roles[i].name === ROLES.ADMIN) {
                 next();
                 return;
               }
