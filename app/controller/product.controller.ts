@@ -10,7 +10,6 @@ export const productController = {
     const productPageSize = pageSize || 10;
     const sortOrder = isAsc !== undefined ? (isAsc ? 1 : -1) : 1;
     try {
-      const count = await ProductModel.find().count();
       const data = await ProductModel.find(
         title
           ? {
@@ -30,7 +29,10 @@ export const productController = {
         )
         .skip((productPage - 1) * productPageSize)
         .limit(productPageSize);
-      res.json({ count, page: productPage, pageSize: productPageSize, data });
+      const count = data.length;
+      res
+        .status(200)
+        .json({ count, page: productPage, pageSize: productPageSize, data });
     } catch (error: any) {
       res.status(500).json({ message: error.message });
     }
