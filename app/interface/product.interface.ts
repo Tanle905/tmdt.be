@@ -1,5 +1,6 @@
 import { Request } from "express";
 import { Model, ObjectId } from "mongoose";
+import { ProductModel } from "../model/product.model";
 
 export interface Product {
   _id?: string;
@@ -27,10 +28,14 @@ export interface ProductQuery {
   idArray: string;
 }
 
+export interface ProductBody extends Product {
+  idArray?: string;
+}
+
 export interface ProductRequest extends Request {
   query: ProductQuery;
   params: ProductParams;
-  body: Product;
+  body: ProductBody;
 }
 
 export interface ProductModel extends Model<Product> {

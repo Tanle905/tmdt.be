@@ -30,20 +30,20 @@ export const productController = {
         .skip((productPage - 1) * productPageSize)
         .limit(productPageSize);
       const count = data.length;
-      res
+      return res
         .status(200)
         .json({ count, page: productPage, pageSize: productPageSize, data });
     } catch (error: any) {
-      res.status(500).json({ message: error.message });
+      return res.status(500).json({ message: error.message });
     }
   },
   getById: async (req: ProductRequest, res: Response) => {
     try {
       const { id } = req.params;
       const data = await ProductModel.findById(id);
-      res.status(200).json(data);
+      return res.status(200).json(data);
     } catch (error: any) {
-      res.status(400).json({ message: error.message });
+      return res.status(400).json({ message: error.message });
     }
   },
   post: async (req: ProductRequest, res: Response) => {
@@ -58,9 +58,9 @@ export const productController = {
     try {
       ProductModel.createIndexes();
       const dataToSave = await productData.save();
-      res.status(200).json(dataToSave);
+      return res.status(200).json(dataToSave);
     } catch (error: any) {
-      res.status(400).json({ message: error.message });
+      return res.status(400).json({ message: error.message });
     }
   },
   put: async (req: ProductRequest, res: Response) => {
@@ -73,33 +73,41 @@ export const productController = {
         },
         { returnDocument: "after" }
       );
-      res.status(200).json(dataToUpdate);
+      return res.status(200).json(dataToUpdate);
     } catch (error: any) {
       return res.status(500).json({ message: error.message });
     }
   },
   delete: async (req: ProductRequest, res: Response) => {
+    const { idArray } = req.body;
     try {
-      const { idArray } = req.params;
-      if (idArray) {
-        const parsedIdArray: string[] = JSON.parse(idArray);
-        const objectIds = parsedIdArray.map((id: any) => new ObjectId(id));
-        const count = await ProductModel.deleteMany({
-          _id: { $in: objectIds },
-        });
-        res.status(200).send(`${count} items has been deleted`);
+      if (!idArray)
+        return res.status(500).json({ message: "Please provide product Id!" });
+      console.log(idArray);
+      let count = 0;
+
+      for (let index = 0; index < idArray.length; index++) {
+        try {
+          await ProductModel.findByIdAndDelete(idArray[index]);
+          count++;
+        } catch (error) {
+          return res.status(500).json({ message: "Error deleting product!" });
+        }
       }
+      return res
+        .status(200)
+        .json({ message: `${count} items has been deleted` });
     } catch (error: any) {
-      res.status(400).json({ message: error.message });
+      return res.status(500).json({ message: error.message });
     }
   },
   deleteById: async (req: ProductRequest, res: Response) => {
     try {
       const { id } = req.params;
       await ProductModel.findByIdAndDelete(id);
-      res.status(200).send(`item ${id} has been deleted`);
+      return res.status(200).json({ message: `item ${id} has been deleted` });
     } catch (error: any) {
-      res.status(400).json({ message: error.message });
+      return res.status(400).json({ message: error.message });
     }
   },
 };
