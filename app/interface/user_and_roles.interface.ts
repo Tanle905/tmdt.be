@@ -7,7 +7,7 @@ export interface Role {
 
 export interface UserRequest extends Request {
   body: User;
-  userId?: string;
+  params: { userId?: string };
 }
 
 export interface User {
@@ -19,6 +19,7 @@ export interface User {
   imageUrl?: string;
   phoneNumber?: number;
   payment?: string;
+  isDeactivated?: boolean;
 }
 
 export interface UserModelInterface extends Model<User> {

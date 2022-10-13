@@ -2,6 +2,7 @@ import { Router } from "express";
 import { AUTH_ROUTE } from "../constants and enums/endpoint";
 import { authController } from "../controller/auth.controller";
 import { verifySignUp } from "../middleware/verifySignUp";
+import { verifyStatus } from "../middleware/verifyStatus";
 
 export const authRouter = Router();
 
@@ -13,4 +14,7 @@ authRouter
     authController.signup
   );
 
-authRouter.route(AUTH_ROUTE.LOGIN).post(authController.signin);
+authRouter
+  .route(AUTH_ROUTE.LOGIN)
+  .all(verifyStatus.isNotDeactivated)
+  .post(authController.signin);

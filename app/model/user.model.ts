@@ -31,6 +31,9 @@ export const userDataSchema = new mongoose.Schema<User>(
     payment: {
       type: String,
     },
+    isDeactivated: {
+      type: Boolean,
+    },
   },
   {
     timestamps: { createdAt: "createdAt", updatedAt: "updatedAt" },

@@ -15,11 +15,15 @@ export const CART_ROUTE = {
   BASE: "/",
   ID: "/:userId",
 };
+export const USER_MANAGEMENT_ROUTE = {
+  BASE: "/",
+  ID: "/:userId",
+};
 //Endpoints
 export const API_ENDPOINT = "/api";
 export const AUTH_ENDPOINT = "/auth";
-export const USER_ENDPOINT = "/user";
 export const PROFILE_ENDPOINT = "/profile";
 export const ADMIN_ENDPOINT = "/admin";
 export const PRODUCT_ENDPOINT = "/product";
 export const CART_ENDPOINT = "/cart";
+export const USER_MANAGEMENT_ENDPOINT = "/user-management";
