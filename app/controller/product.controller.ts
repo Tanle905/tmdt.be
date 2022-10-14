@@ -24,7 +24,7 @@ export const productController = {
       )
         .sort(
           sortBy
-            ? { sortBy: sortOrder, _id: sortOrder }
+            ? [[sortBy, sortOrder]]
             : { updatedAt: sortOrder }
         )
         .skip((productPage - 1) * productPageSize)
