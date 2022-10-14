@@ -9,18 +9,20 @@ export const favoriteController = {
     try {
       const document = await FavoriteModel.findOne({ userId });
       const mappedProductsList = document
-      ? await Promise.all(
-          document.productsList.map(async (item: any) => {
-            const product = await ProductModel.findOne({
-              _id: item,
-            });
-            return {
-              ...product?.toObject(),
-            };
-          })
-        )
-      : [];
-    return res.json({ data: mappedProductsList });    } catch (error) {
+        ? await Promise.all(
+            document.productsList.map(async (item: any) => {
+              const product = await ProductModel.findOne({
+                _id: item,
+              });
+              return {
+                ...product?.toObject(),
+                isFavorite: true,
+              };
+            })
+          )
+        : [];
+      return res.json({ data: mappedProductsList });
+    } catch (error) {
       res.status(500).json({ message: error });
     }
   },

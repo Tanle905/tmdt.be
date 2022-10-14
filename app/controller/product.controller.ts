@@ -1,16 +1,17 @@
 import { Response } from "express";
-import { ObjectId } from "mongodb";
 import { ProductRequest } from "../interface/product.interface";
+import { FavoriteModel } from "../model/favorite.model";
 import { ProductModel } from "../model/product.model";
 
 export const productController = {
   get: async (req: ProductRequest, res: Response) => {
+    const { userId } = res.locals;
     const { isFavorite, page, pageSize, title, sortBy, isAsc } = req.query;
     const productPage = page || 1;
     const productPageSize = pageSize || 10;
     const sortOrder = isAsc !== undefined ? (isAsc ? 1 : -1) : 1;
     try {
-      const data = await ProductModel.find(
+      let productList = await ProductModel.find(
         title
           ? {
               $text: {
@@ -22,17 +23,28 @@ export const productController = {
           ? { isFavorite }
           : {}
       )
-        .sort(
-          sortBy
-            ? [[sortBy, sortOrder]]
-            : { updatedAt: sortOrder }
-        )
+        .sort(sortBy ? [[sortBy, sortOrder]] : { updatedAt: sortOrder })
         .skip((productPage - 1) * productPageSize)
         .limit(productPageSize);
-      const count = data.length;
-      return res
-        .status(200)
-        .json({ count, page: productPage, pageSize: productPageSize, data });
+      const count = productList.length;
+      let mappedProductsList;
+
+      if (userId) {
+        const currentFavoriteList = await FavoriteModel.findOne({ userId });
+        if (currentFavoriteList) {
+          mappedProductsList = productList.map((product) => {
+            if (currentFavoriteList.productsList.includes(product._id))
+              return { ...product.toObject(), isFavorite: true };
+            else return product;
+          });
+        }
+      }
+      return res.status(200).json({
+        count,
+        page: productPage,
+        pageSize: productPageSize,
+        data: userId ? mappedProductsList : productList,
+      });
     } catch (error: any) {
       return res.status(500).json({ message: error.message });
     }
