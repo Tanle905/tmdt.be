@@ -54,12 +54,15 @@ export const cartController = {
               {
                 returnDocument: "after",
               }
-            );
+            ).exec(async (error, currentCart) => {
+              await currentCart?.save();
+              res.json({ data: currentCart });
+            });
           } else {
             currentCart.productsList.push(requestProduct);
+            await currentCart.save();
+            return res.json({ data: currentCart });
           }
-          await currentCart.save();
-          return res.json({ data: currentCart });
         } else {
           const newCart = new CartModel({ userId });
           newCart.productsList.push(requestProduct);
