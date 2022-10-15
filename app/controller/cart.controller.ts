@@ -40,7 +40,7 @@ export const cartController = {
             (item) => item.productId === requestProduct.productId
           )[0];
           if (existedProductInCart) {
-            await CartModel.findOneAndUpdate(
+            CartModel.findOneAndUpdate(
               {
                 _id: currentCart._id,
                 "productsList.productId": existedProductInCart.productId,
