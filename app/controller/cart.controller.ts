@@ -50,18 +50,21 @@ export const cartController = {
                   "productsList.$.quantity":
                     existedProductInCart.quantity + requestProduct.quantity,
                 },
+              },
+              {
+                returnDocument: "after",
               }
             );
           } else {
             currentCart.productsList.push(requestProduct);
           }
           await currentCart.save();
-          return res.json({ data: "Product has been added to cart!" });
+          return res.json({ data: currentCart });
         } else {
           const newCart = new CartModel({ userId });
           newCart.productsList.push(requestProduct);
           await newCart.save();
-          return res.json({ data: "Product has been added to cart!" });
+          return res.json({ data: newCart });
         }
       }
     } catch (error) {
