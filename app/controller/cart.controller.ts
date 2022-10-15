@@ -56,18 +56,18 @@ export const cartController = {
               }
             ).exec(async (error, currentCart) => {
               await currentCart?.save();
-              res.json({ data: currentCart });
+              res.json({ message: "Product has been added to cart!" });
             });
           } else {
             currentCart.productsList.push(requestProduct);
             await currentCart.save();
-            return res.json({ data: currentCart });
+            return res.json({ message: "Product has been added to cart!" });
           }
         } else {
           const newCart = new CartModel({ userId });
           newCart.productsList.push(requestProduct);
           await newCart.save();
-          return res.json({ data: newCart });
+          return res.json({ message: "Product has been added to cart!" });
         }
       }
     } catch (error) {
