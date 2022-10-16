@@ -87,7 +87,42 @@ export const cartController = {
       return res.json({ message: error });
     }
   },
-  updateCart: async (req: CartRequest, res: Response) => {},
+  updateItemInCart: async (req: CartRequest, res: Response) => {
+    const { userId } = res.locals;
+    const requestProduct = req.body.data[0];
+    try {
+      if (userId) {
+        const currentCart = await CartModel.findOne({ userId });
+        if (currentCart) {
+          const existedProductInCart = currentCart.productsList.filter(
+            (item) => item.productId === requestProduct.productId
+          )[0];
+          if (existedProductInCart) {
+            CartModel.findOneAndUpdate(
+              {
+                _id: currentCart._id,
+                "productsList.productId": existedProductInCart.productId,
+              },
+              {
+                $set: {
+                  "productsList.$": {
+                    productId: requestProduct.productId,
+                    quantity: requestProduct.quantity,
+                  },
+                },
+              }
+            ).exec(async (error, currentCart) => {
+              await currentCart?.save();
+              res.json({ message: "Product has updated to cart!" });
+            });
+          } else
+            return res.json({ message: "Product does not exist in cart!" });
+        } else return res.json({ message: "Cart does not exist!" });
+      }
+    } catch (error) {
+      return res.json({ message: error });
+    }
+  },
   deleteProductInCart: async (req: CartRequest, res: Response) => {
     const { userId } = res.locals;
     const requestProduct = req.body.data[0];
