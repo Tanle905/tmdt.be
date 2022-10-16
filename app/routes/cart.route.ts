@@ -10,4 +10,5 @@ cartRouter
   .route(CART_ROUTE.BASE)
   .all(authJwt.verifyToken, verifyStatus.isNotDeactivated)
   .get(cartController.getById)
-  .post(cartController.postById);
+  .post(cartController.postById)
+  .delete(cartController.deleteProductInCart);
