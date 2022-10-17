@@ -5,8 +5,12 @@ export interface Role {
   role: string;
 }
 
+interface UserBody extends User {
+  data?: any;
+}
+
 export interface UserRequest extends Request {
-  body: User;
+  body: UserBody;
   params: { userId?: string };
 }
 
@@ -23,5 +27,5 @@ export interface User {
 }
 
 export interface UserModelInterface extends Model<User> {
-  extractUserData: (payload: User) => any;
+  extractUserData: (payload: User) => User;
 }

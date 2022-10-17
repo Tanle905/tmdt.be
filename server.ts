@@ -9,12 +9,12 @@ import {
   CART_ENDPOINT,
   FAVORITE_ENDPOINT,
   PRODUCT_ENDPOINT,
-  PROFILE_ENDPOINT,
+  USER_PROFILE_ENDPOINT,
   USER_MANAGEMENT_ENDPOINT,
 } from "./app/constants and enums/endpoint";
 import { authRouter } from "./app/routes/auth.route";
 import { cartRouter } from "./app/routes/cart.route";
-import { profileRouter } from "./app/routes/profile.route";
+import { profileRouter } from "./app/routes/user_profile.route";
 import { userManagementRouter } from "./app/routes/user_management.route";
 import { favoriteRouter } from "./app/routes/favorite.route";
 
@@ -34,7 +34,7 @@ app.get("/", (req: Request, res: Response) => {
 app.use(AUTH_ENDPOINT, authRouter);
 app.use(PRODUCT_ENDPOINT, productRouter);
 app.use(CART_ENDPOINT, cartRouter);
-app.use(PROFILE_ENDPOINT, profileRouter);
+app.use(USER_PROFILE_ENDPOINT, profileRouter);
 app.use(USER_MANAGEMENT_ENDPOINT, userManagementRouter);
 app.use(FAVORITE_ENDPOINT, favoriteRouter);
 

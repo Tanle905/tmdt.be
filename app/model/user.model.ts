@@ -1,10 +1,37 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
+import { Address } from "../interface/address.interface";
 import {
   User,
   UserModelInterface,
 } from "../interface/user_and_roles.interface";
 
-export const userDataSchema = new mongoose.Schema<User>(
+const addressDataSchema: Schema = new mongoose.Schema<Address>(
+  {
+    address: {
+      required: true,
+      type: String,
+    },
+    city: {
+      required: true,
+      type: String,
+    },
+    country: {
+      required: true,
+      type: String,
+    },
+    fullName: {
+      required: true,
+      type: String,
+    },
+    phoneNumber: {
+      required: true,
+      type: Number,
+    },
+  },
+  { timestamps: { createdAt: "createdAt", updatedAt: "updatedAt" } }
+);
+
+export const userDataSchema: Schema = new mongoose.Schema<User>(
   {
     username: {
       type: String,
@@ -19,9 +46,7 @@ export const userDataSchema = new mongoose.Schema<User>(
       type: String,
       required: true,
     },
-    address: {
-      type: String,
-    },
+    address: [addressDataSchema],
     imageUrl: {
       type: String,
     },
