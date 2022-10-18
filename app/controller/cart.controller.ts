@@ -1,16 +1,13 @@
 import { Response } from "express";
-import { ObjectId } from "mongodb";
 import { CartRequest } from "../interface/cart.interface";
 import { CartModel } from "../model/cart.model";
-import { FavoriteModel } from "../model/favorite.model";
 import { ProductModel } from "../model/product.model";
+import { getFavoriteList } from "../utils/get_favorite_list.util";
 
 export const cartController = {
   getById: async (req: CartRequest, res: Response) => {
     const { userId } = res.locals;
     try {
-      let favoriteProductsList;
-
       if (userId) {
         const document = await CartModel.find({ userId });
         const mappedProductsList = document[0]
@@ -26,16 +23,13 @@ export const cartController = {
               })
             )
           : [];
-        const currentFavoriteList = await FavoriteModel.findOne({ userId });
-        if (currentFavoriteList) {
-          favoriteProductsList = mappedProductsList.map((product) => {
-            if (currentFavoriteList.productsList.includes(product._id))
-              return { ...product, isFavorite: true };
-            else return product;
-          });
-        }
+        const favoriteProductsList = await getFavoriteList(
+          userId,
+          mappedProductsList
+        );
+
         return res.json({
-          data: currentFavoriteList ? favoriteProductsList : mappedProductsList,
+          data: favoriteProductsList || mappedProductsList,
         });
       }
     } catch (error) {

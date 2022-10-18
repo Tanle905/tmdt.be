@@ -2,6 +2,7 @@ import { Response } from "express";
 import { ProductRequest } from "../interface/product.interface";
 import { FavoriteModel } from "../model/favorite.model";
 import { ProductModel } from "../model/product.model";
+import { getFavoriteList } from "../utils/get_favorite_list.util";
 
 export const productController = {
   get: async (req: ProductRequest, res: Response) => {
@@ -27,23 +28,15 @@ export const productController = {
         .skip((productPage - 1) * productPageSize)
         .limit(productPageSize);
       const count = productList.length;
-      let mappedProductsList;
+      const favoriteProductsList = userId
+        ? await getFavoriteList(userId, productList, true)
+        : null;
 
-      if (userId) {
-        const currentFavoriteList = await FavoriteModel.findOne({ userId });
-        if (currentFavoriteList) {
-          mappedProductsList = productList.map((product) => {
-            if (currentFavoriteList.productsList.includes(product._id))
-              return { ...product.toObject(), isFavorite: true };
-            else return product;
-          });
-        }
-      }
       return res.status(200).json({
         count,
         page: productPage,
         pageSize: productPageSize,
-        data: userId ? mappedProductsList : productList,
+        data: favoriteProductsList || productList,
       });
     } catch (error: any) {
       return res.status(500).json({ message: error.message });
