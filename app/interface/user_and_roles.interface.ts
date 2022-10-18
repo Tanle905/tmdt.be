@@ -6,12 +6,12 @@ export interface Role {
 }
 
 interface UserBody extends User {
-  data?: any;
+  data: any;
 }
 
 export interface UserRequest extends Request {
   body: UserBody;
-  params: { userId?: string };
+  params: { userId: string, id:string };
 }
 
 export interface User {

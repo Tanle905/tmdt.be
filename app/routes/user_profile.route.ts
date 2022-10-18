@@ -13,7 +13,12 @@ profileRouter
   .put(userProfileController.put);
 
 profileRouter
-  .route(USER_PROFILE_ROUTE.ADDRESS)
+  .route(USER_PROFILE_ROUTE.ADDRESS.BASE)
   .all(authJwt.verifyToken, verifyStatus.isNotDeactivated)
-  .get(userProfileController.getAddress)
+  .get(userProfileController.getAddress);
+
+profileRouter
+  .route(USER_PROFILE_ROUTE.ADDRESS.BASE + USER_PROFILE_ROUTE.ADDRESS.ID)
+  .all(authJwt.verifyToken, verifyStatus.isNotDeactivated)
+  .put(userProfileController.updateAddress)
   .delete(userProfileController.deleteAddress);

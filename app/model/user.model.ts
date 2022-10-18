@@ -28,7 +28,6 @@ const addressDataSchema: Schema = new mongoose.Schema<Address>(
       type: Number,
     },
   },
-  { timestamps: { createdAt: "createdAt", updatedAt: "updatedAt" } }
 );
 
 export const userDataSchema: Schema = new mongoose.Schema<User>(

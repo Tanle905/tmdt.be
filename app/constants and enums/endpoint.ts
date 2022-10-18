@@ -6,7 +6,11 @@ export const AUTH_ROUTE = {
 };
 export const USER_PROFILE_ROUTE = {
   BASE: "/",
-  ADDRESS: "/address",
+  ADDRESS: {
+    BASE: "/address",
+    ID: "/:userId",
+  },
+  ID: "/:id",
 };
 export const PRODUCT_ROUTE = {
   BASE: "/",
