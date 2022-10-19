@@ -3,6 +3,7 @@ declare global {
     interface ProcessEnv {
       DATABASE_URL: string;
       PORT: number;
+      STRIPE_SECRET_KEY: string;
     }
   }
 }

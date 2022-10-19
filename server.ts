@@ -7,12 +7,14 @@ import { productRouter } from "./app/routes/product.route";
 import {
   AUTH_ENDPOINT,
   CART_ENDPOINT,
+  CHECKOUT_STRIPE_ENDPOINT,
   PRODUCT_ENDPOINT,
   PROFILE_ENDPOINT,
 } from "./app/constants and enums/endpoint";
 import { authRouter } from "./app/routes/auth.route";
 import { cartRouter } from "./app/routes/cart.route";
 import { profileRouter } from "./app/routes/profile.route";
+import { stripeRouter } from "./app/routes/stripe.route";
 
 //Config
 const app: Application = express();
@@ -31,5 +33,6 @@ app.use(AUTH_ENDPOINT, authRouter);
 app.use(PRODUCT_ENDPOINT, productRouter);
 app.use(CART_ENDPOINT, cartRouter);
 app.use(PROFILE_ENDPOINT, profileRouter);
+app.use(CHECKOUT_STRIPE_ENDPOINT, stripeRouter);
 
 app.listen(port, () => {});
