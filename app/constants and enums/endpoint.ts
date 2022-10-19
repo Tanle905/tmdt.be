@@ -4,8 +4,13 @@ export const AUTH_ROUTE = {
   LOGIN: "/login",
   SIGNUP: "/signup",
 };
-export const PROFILE_ROUTE = {
+export const USER_PROFILE_ROUTE = {
   BASE: "/",
+  ADDRESS: {
+    BASE: "/address",
+    ID: "/:userId",
+  },
+  ID: "/:id",
 };
 export const PRODUCT_ROUTE = {
   BASE: "/",
@@ -25,8 +30,7 @@ export const CHECKOUT_STRIPE_ROUTE = {
 //Endpoints
 export const API_ENDPOINT = "/api";
 export const AUTH_ENDPOINT = "/auth";
-export const USER_ENDPOINT = "/user";
-export const PROFILE_ENDPOINT = "/profile";
+export const USER_PROFILE_ENDPOINT = "/profile";
 export const ADMIN_ENDPOINT = "/admin";
 export const PRODUCT_ENDPOINT = "/product";
 export const CART_ENDPOINT = "/cart";
