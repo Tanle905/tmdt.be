@@ -27,6 +27,13 @@ export const CHECKOUT_STRIPE_ROUTE = {
     ID: { BASE: "/:id", CONFIRM: "/confirm" },
   },
 };
+export const USER_MANAGEMENT_ROUTE = {
+  BASE: "/",
+  ID: "/:userId",
+};
+export const FAVORITE_ROUTE = {
+  BASE: "/",
+};
 //Endpoints
 export const API_ENDPOINT = "/api";
 export const AUTH_ENDPOINT = "/auth";
@@ -35,3 +42,5 @@ export const ADMIN_ENDPOINT = "/admin";
 export const PRODUCT_ENDPOINT = "/product";
 export const CART_ENDPOINT = "/cart";
 export const CHECKOUT_STRIPE_ENDPOINT = "/checkout/stripe";
+export const USER_MANAGEMENT_ENDPOINT = "/user-management";
+export const FAVORITE_ENDPOINT = "/favorite";
