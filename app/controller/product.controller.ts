@@ -23,7 +23,6 @@ export const productController = {
           ? { isFavorite }
           : {}
       )
-        .select("-description")
         .sort(sortBy ? { [sortBy]: sortOrder } : { updatedAt: -1 })
         .skip((productPage - 1) * productPageSize)
         .limit(productPageSize);
