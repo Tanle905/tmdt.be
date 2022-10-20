@@ -8,6 +8,7 @@ const stripe = new Stripe(config.app.stripeSecretKey as string, {
 
 export const stripeController = {
   createPaymentIntents: async (req: Request, res: Response) => {
+    console.log('create payment intents');
     const { paymentMethodId, totalPrice, currency, useStripeSDK } = req.body;
     try {
       const orderAmount = totalPrice * 100;
@@ -20,6 +21,7 @@ export const stripeController = {
           payment_method: paymentMethodId,
           use_stripe_sdk: useStripeSDK,
         };
+        console.log(params);
         const intent = await stripe.paymentIntents.create(params);
 
         return res.status(200).json(generateResponse(intent));
