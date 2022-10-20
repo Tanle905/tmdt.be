@@ -1,6 +1,5 @@
 import { Response } from "express";
 import { ProductRequest } from "../interface/product.interface";
-import { FavoriteModel } from "../model/favorite.model";
 import { ProductModel } from "../model/product.model";
 import { getFavoriteList } from "../utils/get_favorite_list.util";
 
@@ -24,7 +23,7 @@ export const productController = {
           ? { isFavorite }
           : {}
       )
-        .sort(sortBy ? [[sortBy, sortOrder]] : { updatedAt: sortOrder })
+        .sort(sortBy ? {sortBy: sortOrder} : { updatedAt: -1 })
         .skip((productPage - 1) * productPageSize)
         .limit(productPageSize);
       const count = productList.length;
