@@ -22,8 +22,8 @@ export const productController = {
           : isFavorite !== undefined
           ? { isFavorite }
           : {}
-      )
-        .sort(sortBy ? {sortBy: sortOrder} : { updatedAt: -1 })
+      ).select('-description')
+        .sort(sortBy ? {[sortBy]: sortOrder} : { updatedAt: -1 })
         .skip((productPage - 1) * productPageSize)
         .limit(productPageSize);
       const count = productList.length;
