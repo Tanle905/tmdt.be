@@ -10,6 +10,10 @@ export const USER_PROFILE_ROUTE = {
     BASE: "/address",
     ID: "/:userId",
   },
+  ORDER: {
+    BASE: "/order",
+    ID: "/:id",
+  },
   ID: "/:id",
 };
 export const PRODUCT_ROUTE = {
@@ -31,6 +35,10 @@ export const USER_MANAGEMENT_ROUTE = {
   BASE: "/",
   ID: "/:userId",
 };
+export const ORDER_MANAGEMENT_ROUTE = {
+  BASE: "/",
+  ID: "/:id",
+};
 export const FAVORITE_ROUTE = {
   BASE: "/",
 };
@@ -43,4 +51,5 @@ export const PRODUCT_ENDPOINT = "/product";
 export const CART_ENDPOINT = "/cart";
 export const CHECKOUT_STRIPE_ENDPOINT = "/checkout/stripe";
 export const USER_MANAGEMENT_ENDPOINT = "/user-management";
+export const ORDER_MANAGEMENT_ENDPOINT = "/order-management";
 export const FAVORITE_ENDPOINT = "/favorite";

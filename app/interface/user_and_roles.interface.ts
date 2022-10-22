@@ -1,5 +1,6 @@
 import { Request } from "express";
 import { Model } from "mongoose";
+import { OrderDetails } from "./order.interface";
 
 export interface Role {
   role: string;
@@ -11,7 +12,7 @@ interface UserBody extends User {
 
 export interface UserRequest extends Request {
   body: UserBody;
-  params: { userId: string, id:string };
+  params: { userId: string; id: string };
 }
 
 export interface User {
@@ -24,6 +25,7 @@ export interface User {
   phoneNumber?: number;
   payment?: string;
   isDeactivated?: boolean;
+  order?: OrderDetails[];
 }
 
 export interface UserModelInterface extends Model<User> {

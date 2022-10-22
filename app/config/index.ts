@@ -6,7 +6,7 @@ export const config = {
   app: {
     port: process.env.PORT || 13000,
     databaseUrl: process.env.DATABASE_URL,
-    secret: "tanle-secret-key",
+    secret: process.env.JWT_SECRET_KEY,
     stripeSecretKey: process.env.STRIPE_SECRET_KEY,
   },
 };
