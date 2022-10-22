@@ -4,7 +4,7 @@ import { UserRequest } from "../interface/user_and_roles.interface";
 import { UserModel } from "../model/user.model";
 
 export const addressController = {
-  getAddress: async (req: UserRequest, res: Response) => {
+  get: async (req: UserRequest, res: Response) => {
     const { userId } = res.locals;
 
     try {
@@ -18,7 +18,7 @@ export const addressController = {
       return res.status(500).json({ message: error });
     }
   },
-  updateAddress: async (req: UserRequest, res: Response) => {
+  put: async (req: UserRequest, res: Response) => {
     const { userId } = res.locals;
     const { id } = req.params;
     const requestAddress = req.body.data;
@@ -50,7 +50,7 @@ export const addressController = {
       return res.status(500).json({ message: error });
     }
   },
-  deleteAddress: async (req: UserRequest, res: Response) => {
+  delete: async (req: UserRequest, res: Response) => {
     const { userId } = res.locals;
     const { id } = req.params;
 

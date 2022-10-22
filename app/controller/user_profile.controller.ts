@@ -33,12 +33,15 @@ export const userProfileController = {
     try {
       const profileData = UserModel.extractUserData(req.body);
       const address = profileData.address;
+      const order = profileData.order;
       delete profileData.address;
+      delete profileData.order;
       UserModel.findByIdAndUpdate(
         new ObjectId(userId),
         {
           $set: profileData,
           ...(address ? { $push: { address: address } } : {}),
+          ...(order ? { $push: { order: order } } : {}),
         },
         {
           returnDocument: "after",

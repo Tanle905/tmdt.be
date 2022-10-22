@@ -8,10 +8,10 @@ export const addressRouter = Router();
 addressRouter
   .route(USER_PROFILE_ROUTE.ADDRESS.BASE)
   .all(authJwt.verifyToken, verifyStatus.isNotDeactivated)
-  .get(addressController.getAddress);
+  .get(addressController.get);
 
 addressRouter
   .route(USER_PROFILE_ROUTE.ADDRESS.BASE + USER_PROFILE_ROUTE.ADDRESS.ID)
   .all(authJwt.verifyToken, verifyStatus.isNotDeactivated)
-  .put(addressController.updateAddress)
-  .delete(addressController.deleteAddress);
+  .put(addressController.put)
+  .delete(addressController.delete);

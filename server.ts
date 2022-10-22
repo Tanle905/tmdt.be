@@ -20,6 +20,7 @@ import { profileRouter } from "./app/routes/user_profile.route";
 import { userManagementRouter } from "./app/routes/user_management.route";
 import { favoriteRouter } from "./app/routes/favorite.route";
 import { addressRouter } from "./app/routes/address.route";
+import { orderRouter } from "./app/routes/order.route";
 
 //Config
 const app: Application = express();
@@ -39,6 +40,7 @@ app.use(PRODUCT_ENDPOINT, productRouter);
 app.use(CART_ENDPOINT, cartRouter);
 app.use(USER_PROFILE_ENDPOINT, profileRouter);
 app.use(USER_PROFILE_ENDPOINT, addressRouter);
+app.use(USER_PROFILE_ENDPOINT, orderRouter);
 app.use(CHECKOUT_STRIPE_ENDPOINT, stripeRouter);
 app.use(USER_MANAGEMENT_ENDPOINT, userManagementRouter);
 app.use(FAVORITE_ENDPOINT, favoriteRouter);

@@ -22,6 +22,7 @@ export const userDataSchema: Schema = new mongoose.Schema<User>(
       required: true,
     },
     address: [addressDataSchema],
+    order: [orderDataSchema],
     imageUrl: {
       type: String,
     },
@@ -34,7 +35,6 @@ export const userDataSchema: Schema = new mongoose.Schema<User>(
     isDeactivated: {
       type: Boolean,
     },
-    order: [orderDataSchema],
   },
   {
     timestamps: { createdAt: "createdAt", updatedAt: "updatedAt" },

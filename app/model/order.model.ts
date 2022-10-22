@@ -17,7 +17,7 @@ export const orderDataSchema: Schema = new mongoose.Schema<OrderDetails>({
     required: true,
   },
   items: [productDataSchema],
-  address: [addressDataSchema],
+  address: addressDataSchema,
   paymentStatus: {
     type: String,
     required: true,
