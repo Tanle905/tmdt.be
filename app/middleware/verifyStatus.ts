@@ -11,6 +11,7 @@ export const verifyStatus = {
 
     try {
       UserModel.findOne(filter).exec((error: any, user: any) => {
+        if (!user) return res.status(400).json({ message: "User not found!" });
         if (!user.isDeactivated) return next();
 
         return res

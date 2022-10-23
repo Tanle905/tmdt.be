@@ -1,6 +1,7 @@
 import { Response } from "express";
 import { ObjectId } from "mongodb";
 import { UserRequest } from "../interface/user_and_roles.interface";
+import { OrderModel } from "../model/order.model";
 import { UserModel } from "../model/user.model";
 
 export const userProfileController = {
@@ -34,6 +35,10 @@ export const userProfileController = {
       const profileData = UserModel.extractUserData(req.body);
       const address = profileData.address;
       const order = profileData.order;
+      if (profileData.order) {
+        const order = new OrderModel(profileData.order);
+        await order.save();
+      }
       delete profileData.address;
       delete profileData.order;
       UserModel.findByIdAndUpdate(
