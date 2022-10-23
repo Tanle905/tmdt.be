@@ -36,7 +36,7 @@ export const userProfileController = {
       const address = profileData.address;
       const order = profileData.order;
       if (profileData.order) {
-        const order = new OrderModel(profileData.order);
+        const order = new OrderModel({ ...profileData.order, userId });
         await order.save();
       }
       delete profileData.address;
