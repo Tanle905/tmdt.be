@@ -150,4 +150,17 @@ export const cartController = {
       return res.json({ message: error });
     }
   },
+  deleteById: async (req: CartRequest, res: Response) => {
+    const { userId } = res.locals;
+    try {
+      if (userId) {
+        const currentCart = await CartModel.findOneAndDelete({ userId });
+        if (!currentCart)
+          return res.status(400).json({ message: "Cart does not exist!" });
+        return res.status(200).json({ message: "Cart remove completed!" });
+      }
+    } catch (error) {
+      return res.status(500).json({ message: error });
+    }
+  },
 };
