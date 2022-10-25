@@ -22,7 +22,7 @@ export const PRODUCT_ROUTE = {
 };
 export const CART_ROUTE = {
   BASE: "/",
-  ID: "/:id",
+  ID: "/:userId",
 };
 export const CHECKOUT_STRIPE_ROUTE = {
   BASE: "/",
