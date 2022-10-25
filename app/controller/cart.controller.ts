@@ -1,11 +1,12 @@
 import { Response } from "express";
+import { ObjectId } from "mongodb";
 import { CartRequest } from "../interface/cart.interface";
 import { CartModel } from "../model/cart.model";
 import { ProductModel } from "../model/product.model";
 import { getFavoriteList } from "../utils/get_favorite_list.util";
 
 export const cartController = {
-  getById: async (req: CartRequest, res: Response) => {
+  get: async (req: CartRequest, res: Response) => {
     const { userId } = res.locals;
     try {
       if (userId) {
@@ -36,7 +37,7 @@ export const cartController = {
       return res.json({ message: error });
     }
   },
-  postById: async (req: CartRequest, res: Response) => {
+  post: async (req: CartRequest, res: Response) => {
     const { userId } = res.locals;
     const requestProduct = req.body.data[0];
     try {
@@ -152,9 +153,10 @@ export const cartController = {
   },
   deleteById: async (req: CartRequest, res: Response) => {
     const { userId } = res.locals;
+    const { id } = req.params;
     try {
       if (userId) {
-        const currentCart = await CartModel.findOneAndDelete({ userId });
+        const currentCart = await CartModel.findByIdAndDelete(new ObjectId(id));
         if (!currentCart)
           return res.status(400).json({ message: "Cart does not exist!" });
         return res.status(200).json({ message: "Cart remove completed!" });

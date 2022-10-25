@@ -19,15 +19,13 @@ export const addressController = {
     }
   },
   put: async (req: UserRequest, res: Response) => {
-    const { userId } = res.locals;
     const { id } = req.params;
     const requestAddress = req.body.data;
 
     try {
       UserModel.findOneAndUpdate(
         {
-          _id: new ObjectId(userId),
-          address: new ObjectId(id),
+          "address.id": new ObjectId(id),
         },
         {
           $set: {
@@ -38,9 +36,8 @@ export const addressController = {
             "address.$.phoneNumber": requestAddress.phoneNumber,
           },
         },
-        { upsert: true, returnDocument: "after" }
+        { returnDocument: "after" }
       ).exec(async (error, user) => {
-        console.log(error, user);
         if (error) return res.status(400).json({ message: error });
         if (!user)
           return res.status(404).json({ message: "Address Not found!" });

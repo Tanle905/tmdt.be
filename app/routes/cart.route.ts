@@ -9,7 +9,12 @@ export const cartRouter = Router();
 cartRouter
   .route(CART_ROUTE.BASE)
   .all(authJwt.verifyToken, verifyStatus.isNotDeactivated)
-  .get(cartController.getById)
-  .post(cartController.postById)
+  .get(cartController.get)
+  .post(cartController.post)
   .put(cartController.updateItemInCart)
   .delete(cartController.deleteProductInCart);
+
+cartRouter
+  .route(CART_ROUTE.ID)
+  .all(authJwt.verifyToken, verifyStatus.isNotDeactivated)
+  .delete(cartController.deleteById);

@@ -8,7 +8,7 @@ export const USER_PROFILE_ROUTE = {
   BASE: "/",
   ADDRESS: {
     BASE: "/address",
-    ID: "/:userId",
+    ID: "/:id",
   },
   ORDER: {
     BASE: "/order",
@@ -22,7 +22,7 @@ export const PRODUCT_ROUTE = {
 };
 export const CART_ROUTE = {
   BASE: "/",
-  ID: "/:userId",
+  ID: "/:id",
 };
 export const CHECKOUT_STRIPE_ROUTE = {
   BASE: "/",
