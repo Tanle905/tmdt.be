@@ -9,7 +9,7 @@ export interface Product {
   price: number;
   imageUrl: string;
   isFavorite?: boolean;
-  quantity: number;
+  productQuantity: number;
 }
 
 export interface ProductParams {

@@ -24,7 +24,7 @@ export const productDataSchema: Schema = new mongoose.Schema<Product>(
     isFavorite: {
       type: Boolean,
     },
-    quantity: {
+    productQuantity: {
       type: Number,
       required: true,
     },
