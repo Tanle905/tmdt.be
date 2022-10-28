@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { Model, ObjectId } from "mongoose";
+import { Model } from "mongoose";
 import { ProductModel } from "../model/product.model";
 
 export interface Product {
@@ -9,6 +9,7 @@ export interface Product {
   price: number;
   imageUrl: string;
   isFavorite?: boolean;
+  quantity: number;
 }
 
 export interface ProductParams {

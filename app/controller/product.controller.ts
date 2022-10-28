@@ -51,13 +51,15 @@ export const productController = {
     }
   },
   post: async (req: ProductRequest, res: Response) => {
-    const { title, description, price, imageUrl, isFavorite } = req.body;
+    const { title, description, price, imageUrl, isFavorite, quantity } =
+      req.body;
     const productData = new ProductModel({
       title,
       description,
       price,
       imageUrl,
       isFavorite: isFavorite || false,
+      quantity: quantity || 0,
     });
     try {
       ProductModel.createIndexes();

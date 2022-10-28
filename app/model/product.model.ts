@@ -24,6 +24,10 @@ export const productDataSchema: Schema = new mongoose.Schema<Product>(
     isFavorite: {
       type: Boolean,
     },
+    quantity: {
+      type: Number,
+      required: true,
+    },
   },
   {
     timestamps: { createdAt: "createdAt", updatedAt: "updatedAt" },
