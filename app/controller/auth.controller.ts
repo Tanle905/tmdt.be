@@ -48,10 +48,10 @@ export const authController = {
           if (!user) {
             return res.status(404).json({ message: "User Not found." });
           }
-
+          const userClone = user.toObject();
           const passwordIsValid = bcrypt.compareSync(
             req.body.password,
-            user.password
+            userClone.password
           );
           const token = jwt.sign({ id: user.id }, config.app.secret);
           const authorities = [];
@@ -62,15 +62,13 @@ export const authController = {
             });
           }
           for (let i = 0; i < user.roles.length; i++) {
-            authorities.push(user.roles[i].name);
+            authorities.push(userClone.roles[i].name);
           }
+          delete userClone.password;
           res.status(200).json({
-            id: user._id,
-            username: user.username,
-            email: user.email,
+            ...userClone,
             roles: authorities,
             accessToken: token,
-            imageUrl: user.imageUrl,
           });
         });
     } catch (error) {
