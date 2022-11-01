@@ -2,6 +2,7 @@ import { Response } from "express";
 import { ObjectId } from "mongodb";
 import { UserRequest } from "../interface/user_and_roles.interface";
 import { OrderModel } from "../model/order.model";
+import { ProductModel } from "../model/product.model";
 import { UserModel } from "../model/user.model";
 
 export const userProfileController = {
@@ -37,6 +38,18 @@ export const userProfileController = {
       const order = profileData.order;
       if (profileData.order) {
         const order = new OrderModel({ ...profileData.order, userId });
+        for (const item of order.items) {
+          console.log(item._id)
+          await ProductModel.findByIdAndUpdate(
+            new ObjectId(item._id),
+            {
+              $set: {
+                numberSold: item.numberSold ? item.numberSold+=1 : 1,
+                productQuantity: (item.productQuantity -= item.quantity),
+              },
+            },
+          );
+        }
         await order.save();
       }
       delete profileData.address;
