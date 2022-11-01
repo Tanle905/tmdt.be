@@ -39,17 +39,14 @@ export const userProfileController = {
       if (profileData.order) {
         const order = new OrderModel({ ...profileData.order, userId });
         for (const item of order.items) {
-          console.log(item._id)
-          console.log((item))
-          await ProductModel.findByIdAndUpdate(
-            new ObjectId(item._id),
-            {
-              $set: {
-                numberSold: item.numberSold ? item.numberSold+=1 : 1,
-                productQuantity: (item.productQuantity -= item.quantity),
-              },
+          console.log(item._id);
+          console.log(item);
+          await ProductModel.findByIdAndUpdate(item._id, {
+            $set: {
+              numberSold: item.numberSold ? (item.numberSold += 1) : 1,
+              productQuantity: (item.productQuantity -= item.quantity),
             },
-          );
+          });
         }
         await order.save();
       }
