@@ -40,6 +40,7 @@ export const userProfileController = {
         const order = new OrderModel({ ...profileData.order, userId });
         for (const item of order.items) {
           console.log(item._id)
+          console.log((item.productQuantity -= item.quantity))
           await ProductModel.findByIdAndUpdate(
             new ObjectId(item._id),
             {
