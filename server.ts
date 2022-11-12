@@ -12,6 +12,7 @@ import {
   USER_PROFILE_ENDPOINT,
   USER_MANAGEMENT_ENDPOINT,
   FAVORITE_ENDPOINT,
+  BANNER_ENDPOINT,
 } from "./app/constants and enums/endpoint";
 import { authRouter } from "./app/routes/auth.route";
 import { cartRouter } from "./app/routes/cart.route";
@@ -21,6 +22,7 @@ import { userManagementRouter } from "./app/routes/user_management.route";
 import { favoriteRouter } from "./app/routes/favorite.route";
 import { addressRouter } from "./app/routes/address.route";
 import { orderRouter } from "./app/routes/order.route";
+import { bannerRouter } from "./app/routes/banner.route";
 
 //Config
 const app: Application = express();
@@ -37,6 +39,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 app.use(AUTH_ENDPOINT, authRouter);
 app.use(PRODUCT_ENDPOINT, productRouter);
+app.use(BANNER_ENDPOINT, bannerRouter);
 app.use(CART_ENDPOINT, cartRouter);
 app.use(USER_PROFILE_ENDPOINT, profileRouter);
 app.use(USER_PROFILE_ENDPOINT, addressRouter);

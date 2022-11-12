@@ -20,6 +20,9 @@ export const PRODUCT_ROUTE = {
   BASE: "/",
   ID: "/:id",
 };
+export const BANNER_ROUTE = {
+  BASE: "/",
+};
 export const CART_ROUTE = {
   BASE: "/",
   ID: "/:userId",
@@ -48,6 +51,7 @@ export const AUTH_ENDPOINT = "/auth";
 export const USER_PROFILE_ENDPOINT = "/profile";
 export const ADMIN_ENDPOINT = "/admin";
 export const PRODUCT_ENDPOINT = "/product";
+export const BANNER_ENDPOINT = "/banner";
 export const CART_ENDPOINT = "/cart";
 export const CHECKOUT_STRIPE_ENDPOINT = "/checkout/stripe";
 export const USER_MANAGEMENT_ENDPOINT = "/user-management";
