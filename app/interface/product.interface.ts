@@ -10,6 +10,7 @@ export interface Product {
   imageUrl: string;
   isFavorite?: boolean;
   productQuantity: number;
+  numberSold?: number;
 }
 
 export interface ProductParams {

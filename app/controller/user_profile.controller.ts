@@ -2,6 +2,7 @@ import { Response } from "express";
 import { ObjectId } from "mongodb";
 import { UserRequest } from "../interface/user_and_roles.interface";
 import { OrderModel } from "../model/order.model";
+import { ProductModel } from "../model/product.model";
 import { UserModel } from "../model/user.model";
 
 export const userProfileController = {
@@ -34,10 +35,16 @@ export const userProfileController = {
     try {
       const profileData = UserModel.extractUserData(req.body);
       const address = profileData.address;
-      const order = profileData.order;
+      const orderParams: any = profileData.order;
       if (profileData.order) {
-        const order = new OrderModel({ ...profileData.order, userId });
-        await order.save();
+        for (const item of orderParams.items) {
+          await ProductModel.findByIdAndUpdate(new ObjectId(item.productId), {
+            $inc: {
+              numberSold: item.quantity,
+              productQuantity: -item.quantity,
+            },
+          });
+        }
       }
       delete profileData.address;
       delete profileData.order;
@@ -46,7 +53,7 @@ export const userProfileController = {
         {
           $set: profileData,
           ...(address ? { $push: { address: address } } : {}),
-          ...(order ? { $push: { order: order } } : {}),
+          ...(orderParams ? { $push: { order: orderParams } } : {}),
         },
         {
           returnDocument: "after",
@@ -59,8 +66,13 @@ export const userProfileController = {
           if (!user)
             return res.status(404).json({ message: "User Not found!" });
           const authorities = [];
+
           for (let i = 0; i < user.roles.length; i++) {
             authorities.push(user.roles[i].name);
+          }
+          if (profileData.order) {
+            const order = new OrderModel({ ...profileData.order, userId });
+            await order.save();
           }
           return res
             .status(200)

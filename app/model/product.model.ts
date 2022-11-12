@@ -28,6 +28,9 @@ export const productDataSchema: Schema = new mongoose.Schema<Product>(
       type: Number,
       required: true,
     },
+    numberSold: {
+      type: Number,
+    }
   },
   {
     timestamps: { createdAt: "createdAt", updatedAt: "updatedAt" },
