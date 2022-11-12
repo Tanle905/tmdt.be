@@ -26,7 +26,7 @@ export const productController = {
         .sort(sortBy ? { [sortBy]: sortOrder } : { createdAt: -1 })
         .skip((productPage - 1) * productPageSize)
         .limit(productPageSize);
-      const count = productList.length;
+      const count = await ProductModel.count();
       const favoriteProductsList = userId
         ? await getFavoriteList(userId, productList, true)
         : null;
