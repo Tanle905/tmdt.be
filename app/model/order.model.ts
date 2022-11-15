@@ -17,7 +17,7 @@ export const orderDataSchema: Schema = new mongoose.Schema<OrderDetails>(
       type: String,
       required: true,
     },
-    items: [productDataSchema],
+    items: [productDataSchema.add({ quantity: Number })],
     address: addressDataSchema,
     paymentStatus: {
       type: String,
