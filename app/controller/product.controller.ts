@@ -9,7 +9,7 @@ export const productController = {
     const { isFavorite, page, pageSize, title, sortBy, isAsc } = req.query;
     const productPage = page || 1;
     const productPageSize = pageSize || 10;
-    const sortOrder = isAsc || 1;
+    const sortOrder: any = isAsc || 1;
     try {
       let productList = await ProductModel.find(
         title

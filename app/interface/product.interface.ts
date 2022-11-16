@@ -26,7 +26,7 @@ export interface ProductQuery {
   price: string;
   isFavorite: boolean;
   sortBy: string;
-  isAsc: boolean;
+  isAsc: number;
   idArray: string;
 }
 
