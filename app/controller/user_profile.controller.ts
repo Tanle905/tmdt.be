@@ -53,7 +53,9 @@ export const userProfileController = {
         {
           $set: profileData,
           ...(address ? { $push: { address: address } } : {}),
-          ...(orderParams ? { $push: { order: orderParams } } : {}),
+          ...(orderParams
+            ? { $push: { order: { $each: [orderParams], $position: 0 } } }
+            : {}),
         },
         {
           returnDocument: "after",
