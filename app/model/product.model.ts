@@ -3,6 +3,7 @@ import {
   Product,
   ProductModel as ProductModelInterface,
 } from "../interface/product.interface";
+import { reviewDataSchema } from "./review.model";
 
 export const productDataSchema: Schema = new mongoose.Schema<Product>(
   {
@@ -30,7 +31,8 @@ export const productDataSchema: Schema = new mongoose.Schema<Product>(
     },
     numberSold: {
       type: Number,
-    }
+    },
+    review: [reviewDataSchema],
   },
   {
     timestamps: { createdAt: "createdAt", updatedAt: "updatedAt" },

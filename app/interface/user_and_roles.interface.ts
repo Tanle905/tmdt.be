@@ -2,6 +2,7 @@ import { Request } from "express";
 import { Model } from "mongoose";
 import { Address } from "./address.interface";
 import { OrderDetails } from "./order.interface";
+import { Review } from "./review.interface";
 
 export interface Role {
   role: string;
@@ -27,6 +28,7 @@ export interface User {
   phoneNumber?: number;
   payment?: string;
   isDeactivated?: boolean;
+  review: Review[];
 }
 
 export interface UserModelInterface extends Model<User> {

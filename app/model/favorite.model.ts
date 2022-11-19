@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { Favorite, FavoriteDetails } from "../interface/favorite.interface";
+import { Favorite } from "../interface/favorite.interface";
 
 export const cartDataSchema: Schema = new mongoose.Schema<Favorite>(
   {

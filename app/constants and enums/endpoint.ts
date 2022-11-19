@@ -18,7 +18,13 @@ export const USER_PROFILE_ROUTE = {
 };
 export const PRODUCT_ROUTE = {
   BASE: "/",
-  ID: "/:id",
+  ID: {
+    BASE: "/:id",
+    REVIEW: {
+      BASE:"/review",
+      ID:"/:reviewId"
+    },
+  },
 };
 export const BANNER_ROUTE = {
   BASE: "/",

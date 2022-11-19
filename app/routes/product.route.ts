@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { PRODUCT_ROUTE } from "../constants and enums/endpoint";
 import { productController } from "../controller/product.controller";
+import { reviewController } from "../controller/review.controller";
 import { authJwt } from "../middleware/authJwt";
 import { decodeToken } from "../middleware/decodeToken";
 import { verifyStatus } from "../middleware/verifyStatus";
@@ -11,7 +12,7 @@ productRouter
   .all(decodeToken.decodeToken)
   .get(productController.get);
 
-productRouter.route(PRODUCT_ROUTE.ID).get(productController.getById);
+productRouter.route(PRODUCT_ROUTE.ID.BASE).get(productController.getById);
 
 productRouter
   .route(PRODUCT_ROUTE.BASE)
@@ -20,7 +21,12 @@ productRouter
   .delete(productController.delete);
 
 productRouter
-  .route(PRODUCT_ROUTE.ID)
+  .route(PRODUCT_ROUTE.ID.BASE)
   .all(authJwt.verifyToken, authJwt.isAdmin, verifyStatus.isNotDeactivated)
   .put(productController.put)
   .delete(productController.deleteById);
+
+productRouter
+  .route(PRODUCT_ROUTE.ID.BASE + PRODUCT_ROUTE.ID.REVIEW.BASE)
+  .all(authJwt.verifyToken, authJwt.isAdmin, verifyStatus.isNotDeactivated)
+  .post(reviewController.addReview);

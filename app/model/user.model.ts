@@ -5,6 +5,7 @@ import {
 } from "../interface/user_and_roles.interface";
 import { addressDataSchema } from "./address.model";
 import { orderDataSchema } from "./order.model";
+import { reviewDataSchema } from "./review.model";
 
 export const userDataSchema: Schema = new mongoose.Schema<User>(
   {
@@ -35,6 +36,7 @@ export const userDataSchema: Schema = new mongoose.Schema<User>(
     isDeactivated: {
       type: Boolean,
     },
+    review: [reviewDataSchema],
   },
   {
     timestamps: { createdAt: "createdAt", updatedAt: "updatedAt" },

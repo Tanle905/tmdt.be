@@ -1,6 +1,7 @@
 import { Request } from "express";
 import { Model } from "mongoose";
 import { ProductModel } from "../model/product.model";
+import { Review } from "./review.interface";
 
 export interface Product {
   _id?: string;
@@ -11,6 +12,7 @@ export interface Product {
   isFavorite?: boolean;
   productQuantity: number;
   numberSold?: number;
+  review?: Review[];
 }
 
 export interface ProductParams {
