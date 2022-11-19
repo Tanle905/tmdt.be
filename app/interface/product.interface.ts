@@ -13,6 +13,7 @@ export interface Product {
   productQuantity: number;
   numberSold?: number;
   review?: Review[];
+  totalReviews: number;
 }
 
 export interface ProductParams {

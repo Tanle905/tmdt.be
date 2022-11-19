@@ -33,6 +33,9 @@ export const productDataSchema: Schema = new mongoose.Schema<Product>(
       type: Number,
     },
     review: [reviewDataSchema],
+    totalReviews: {
+      type: Number,
+    },
   },
   {
     timestamps: { createdAt: "createdAt", updatedAt: "updatedAt" },

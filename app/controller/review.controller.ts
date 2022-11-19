@@ -4,12 +4,25 @@ import { ReviewModel } from "../model/review.model";
 import { UserModel } from "../model/user.model";
 
 export const reviewController = {
-  getReviewById: async (req: Request, res: Response) => {
-    const { id } = req.params;
+  getReviewByProductId: async (req: Request, res: Response) => {
+    const { productId } = req.params;
     try {
-      if (!id)
+      if (!productId)
         return res.status(400).json({ message: "Please provide an id!!!" });
-      const document = await ReviewModel.findById(id);
+      const document = await ReviewModel.find({ productId: productId });
+      if (!document)
+        return res.status(404).json({ message: "Review not found!!!" });
+      else return res.status(200).json({ data: document });
+    } catch (error) {
+      return res.status(500).json({ message: error });
+    }
+  },
+  getReviewByUserId: async (req: Request, res: Response) => {
+    const { userId } = res.locals;
+    try {
+      if (!userId)
+        return res.status(400).json({ message: "Please provide an id!!!" });
+      const document = await ReviewModel.find({ userId });
       if (!document)
         return res.status(404).json({ message: "Review not found!!!" });
       else return res.status(200).json({ data: document });
@@ -18,7 +31,6 @@ export const reviewController = {
     }
   },
   addReview: async (req: Request, res: Response) => {
-    const { id } = req.params;
     const { userId, description, imageUrl, productId, stars, username } =
       req.body;
     try {
@@ -30,14 +42,24 @@ export const reviewController = {
         stars,
         username,
       });
-      const document = await ProductModel.findByIdAndUpdate(
-        id,
-        { $push: { review: review } },
-        { returnDocument: "after" }
-      );
-      await UserModel.findByIdAndUpdate(userId, { $push: { review: review } });
-
-      return res.status(500).json(document);
+      ProductModel.findById(productId).exec(async (error, product) => {
+        if (error) return res.status(500).json({ message: error });
+        await UserModel.findByIdAndUpdate(userId, {
+          $push: { review },
+        });
+        await review.save();
+        await product.updateOne(
+          { $inc: { totalReviews: 1 } },
+          { upsert: true }
+        );
+        if (product.review.length < 2) {
+          await product.updateOne(
+            { $push: { review } },
+            { returnDocument: "after" }
+          );
+        }
+        return res.status(200).json(review);
+      });
     } catch (error) {
       return res.status(500).json({ message: error });
     }
