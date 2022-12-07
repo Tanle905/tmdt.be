@@ -14,6 +14,7 @@ import {
   FAVORITE_ENDPOINT,
   BANNER_ENDPOINT,
   REVIEW_ENDPOINT,
+  ORDER_MANAGEMENT_ENDPOINT,
 } from "./app/constants and enums/endpoint";
 import { authRouter } from "./app/routes/auth.route";
 import { cartRouter } from "./app/routes/cart.route";
@@ -46,7 +47,7 @@ app.use(BANNER_ENDPOINT, bannerRouter);
 app.use(CART_ENDPOINT, cartRouter);
 app.use(USER_PROFILE_ENDPOINT, profileRouter);
 app.use(USER_PROFILE_ENDPOINT, addressRouter);
-app.use(USER_PROFILE_ENDPOINT, orderRouter);
+app.use(ORDER_MANAGEMENT_ENDPOINT, orderRouter);
 app.use(CHECKOUT_STRIPE_ENDPOINT, stripeRouter);
 app.use(USER_MANAGEMENT_ENDPOINT, userManagementRouter);
 app.use(FAVORITE_ENDPOINT, favoriteRouter);

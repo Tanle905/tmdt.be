@@ -45,6 +45,8 @@ export const userProfileController = {
             },
           });
         }
+        const order = new OrderModel(profileData.order);
+        await order.save();
       }
       delete profileData.address;
       delete profileData.order;
